@@ -43,3 +43,19 @@ export function nth(ls: List, n: number): Element {
         return nth(_tail(ls), n - 1);
     }
 }
+
+export function listEqual(l1: List, l2: List): boolean {
+    if(length(l1) !== length(l2)) {
+        return false;
+    }
+
+    if (l1 == emptyNode) {
+        return l2 == emptyNode;
+    }
+    else if (l2 == emptyNode) {
+        return l1 == emptyNode;
+    }
+    else {
+        return _head(l1) == _head(l2) && listEqual(_tail(l1), _tail(l2));
+    }
+}

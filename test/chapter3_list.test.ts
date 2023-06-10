@@ -1,7 +1,7 @@
 import {each} from "./test_utility.ts";
 import {pair} from "../src/chapter3_pair.ts";
 import {Element, emptyNode} from "../src/chapter3_pair.ts";
-import {List, listToString, length, append, nth} from "../src/chapter3_list.ts";
+import {List, listToString, length, append, nth, listEqual} from "../src/chapter3_list.ts";
 
 import {assertEquals} from "https://deno.land/std@0.191.0/testing/asserts.ts";
 import {describe} from "https://deno.land/std@0.191.0/testing/bdd.ts";
@@ -64,6 +64,25 @@ describe('test nth(list, n)', () => {
         ([ls, n, e]: [List, number, Element]) => {
             const actual = nth(ls, n);
             assertEquals(actual, e);
+        }
+    )
+});
+
+describe('test listEqual', () => {
+    each<[List, List, boolean]>([
+            [emptyNode, emptyNode, true],
+            [pair(1, emptyNode), emptyNode, false],
+            [emptyNode, pair(1, emptyNode), false],
+            [pair(1, emptyNode), pair(1, emptyNode), true],
+            [pair(1, emptyNode), pair(2, emptyNode), false],
+            [pair(1, pair(2, emptyNode)), pair(1, pair(2, emptyNode)), true],
+            [pair(1, pair(2, emptyNode)), pair(1, pair(3, emptyNode)), false],
+            [pair(1, pair(2, emptyNode)), pair(2, pair(1, emptyNode)), false],
+        ].reduce((accu, [l1, l2, eq]) => ({...accu, [`${listToString(l1 as List)} == ${listToString(l2 as List)} => ${eq}`]: [l1, l2, eq]}), {}),
+
+        ([l1, l2, expected]: [List, List, boolean]) => {
+            const actual = listEqual(l1, l2);
+            assertEquals(actual, expected);
         }
     )
 });

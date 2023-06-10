@@ -1,6 +1,7 @@
 export type Element = any;
 type PairVisitor = (a: Element, b: Element) => Element;
 export type Pair = (s: PairVisitor) => Element;
+export const emptyNode = null;
 
 /***
  * Construct a pair
@@ -46,7 +47,7 @@ export function isPair(x: Pair): boolean
  */
 export function pairToString(x: Pair): string {
     if (!isPair(x)){
-        return String(x);
+        return x == emptyNode ? '#' : String(x);
     }
     else {
         return `${pairToString(first(x))}, ${pairToString(second(x))}`;

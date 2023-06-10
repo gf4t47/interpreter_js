@@ -1,15 +1,13 @@
-import {first, pair, Pair, pairToString, second, Element} from "./chapter3_pair.ts";
+import {first, pair, Pair, pairToString, second, Element, emptyNode} from "./chapter3_pair.ts";
 
 export type List = Pair | null;
 
 const _head = first;
 const _tail = second;
 
-const emptyList = null;
-
 export function listToString(ls: List) {
-    if (ls == emptyList) {
-        return `[${emptyList}]`;
+    if (ls == emptyNode) {
+        return `[${emptyNode}]`;
     }
     else {
         return `[${pairToString(ls)}]`;
@@ -17,7 +15,7 @@ export function listToString(ls: List) {
 }
 
 export function length(ls: List): number {
-    if (ls == null) {
+    if (ls == emptyNode) {
         return 0;
     }
     else {
@@ -26,7 +24,7 @@ export function length(ls: List): number {
 }
 
 export function append(l1: List, l2: List): List {
-    if (l1 == null) {
+    if (l1 == emptyNode) {
         return l2;
     }
     else {
@@ -35,7 +33,7 @@ export function append(l1: List, l2: List): List {
 }
 
 export function nth(ls: List, n: number): Element {
-    if (ls == null) {
+    if (ls == emptyNode){
         throw new Error(`Index out of bound: ${n}`);
     }
     else if (n == 0) {

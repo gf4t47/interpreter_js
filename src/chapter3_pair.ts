@@ -38,7 +38,7 @@ export function second(p: Pair): Element
  */
 export function isPair(x: Pair): boolean
 {
-    return typeof(x) == "function";
+    return x != emptyNode && typeof(x) == "function";
 }
 
 /***
@@ -46,11 +46,8 @@ export function isPair(x: Pair): boolean
  * @param x
  */
 export function pairToString(x: Pair): string {
-    if (x == emptyNode) {
-        return '#';
-    }
-    else if (!isPair(x)){
-        return String(x);
+    if (!isPair(x)){
+        return x == emptyNode ? '#' : String(x);
     }
     else {
         const fst = pairToString(first(x));

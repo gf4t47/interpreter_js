@@ -1,11 +1,12 @@
 import {each} from "./test_utility.ts";
-import {pair} from "../src/chapter3_pair.ts";
+import {Pair, pair} from "../src/chapter3_pair.ts";
 import {Element, emptyNode} from "../src/chapter3_pair.ts";
-import {List, listToString, length, append, nth, listEqual} from "../src/chapter3_list.ts";
+import {length, append, nth, listEqual, listToString} from "../src/chapter3_list.ts";
 
 import {assertEquals} from "https://deno.land/std@0.191.0/testing/asserts.ts";
 import {describe} from "https://deno.land/std@0.191.0/testing/bdd.ts";
 
+type List = Pair;
 
 /***
  * test length(list)

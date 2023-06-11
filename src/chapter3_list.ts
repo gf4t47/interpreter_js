@@ -1,13 +1,13 @@
-import {first, pair, Pair, pairToString, second, Element, emptyNode} from "./chapter3_pair.ts";
-
-export type List = Pair | null;
+import {first, pair, Pair, second, Element, emptyNode, pairToString} from "./chapter3_pair.ts";
 
 const _head = first;
 const _tail = second;
 
+type List = Pair;
+
 export function listToString(ls: List) {
     if (ls == emptyNode) {
-        return `[${emptyNode}]`;
+        return '[]';
     }
     else {
         return `[${pairToString(ls)}]`;

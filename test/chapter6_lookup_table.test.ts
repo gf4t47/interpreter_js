@@ -22,4 +22,3 @@ describe('test construct lookup table', () => {
         }
     )
 });
-

@@ -1,4 +1,4 @@
-import {first, isPair, Pair, second} from "./chapter3_pair.ts";
+import {emptyNode, first, isPair, Pair, second} from "./chapter3_pair.ts";
 
 const _left = first;
 const _right = second;
@@ -15,4 +15,12 @@ export function treeEqual(t1: Tree, t2: Tree): boolean {
     }
 
     return false;
+}
+
+export function treeSum(t: Tree): number {
+    if (!isPair(t)) {
+        return t == emptyNode ? 0 : Number(t);
+    }
+
+    return treeSum(_left(t)) + treeSum(_right(t));
 }

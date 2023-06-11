@@ -3,6 +3,13 @@ import {emptyNode, first, Pair, pair, second, Element, isPair} from "./chapter3_
 type BinOp = Pair;
 const typeTag = `binOp#${Math.random().toString()}`;
 
+const calcOp: Record<string, (a: number, b: number) => number> = {
+    '+': (x: number, y: number) => x + y,
+    '-': (x: number, y: number) => x - y,
+    '*': (x: number, y: number) => x * y,
+    '/': (x: number, y: number) => x / y,
+}
+
 export function binop(op: string, e1: Element, e2: Element): BinOp
 {
     return pair(typeTag, pair(op, pair(e1, pair(e2, emptyNode))));
@@ -60,4 +67,19 @@ export function toString(x: Element): string {
     const e2 = binopE2(x);
 
     return `binop(${op}, ${toString(e1)}, ${toString(e2)})`;
+}
+
+export function calc(t: BinOp): number {
+    if (!isBinOp(t)) {
+        return Number(t);
+    }
+
+    const op = binopOp(t);
+    const e1 = binopE1(t);
+    const e2 = binopE2(t);
+
+    const n1 = calc(e1);
+    const n2 = calc(e2);
+
+    return calcOp[op](n1, n2);
 }

@@ -26,3 +26,30 @@ export function variableName(x: AstNode): string {
     return first(second(x));
 }
 
+export function func(name: string, body: AstNode) {
+    return pair(funcTypeTag, pair(name, pair(body, emptyNode)));
+}
+
+export function isFunc(x: AstNode): boolean {
+    if (!isPair(x)) {
+        return false;
+    }
+
+    return first(x) == funcTypeTag;
+}
+
+export function funcParameter(x: AstNode): string {
+    if (!isFunc(x)) {
+        throw new Error(`not a function: ${x}`);
+    }
+
+    return first(second(x));
+}
+
+export function funcBody(x: AstNode): AstNode {
+    if (!isFunc(x)) {
+        throw new Error(`not a function: ${x}`);
+    }
+
+    return first(second(second(x)));
+}

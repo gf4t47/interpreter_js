@@ -10,6 +10,12 @@ export const calcOp: Record<string, (a: number, b: number) => number> = {
     '/': (x: number, y: number) => x / y,
 }
 
+export const compareOp: Record<string, (a: number, b: number) => boolean> = {
+    '<': (x: number, y: number) => x < y,
+    '>': (x: number, y: number) => x > y,
+    '=': (x: number, y: number) => x == y,
+}
+
 export function binop(op: string, e1: Element, e2: Element): BinOp
 {
     return pair(typeTag, pair(op, pair(e1, pair(e2, emptyNode))));

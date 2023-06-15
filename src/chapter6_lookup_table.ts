@@ -1,6 +1,6 @@
 import {emptyNode, Pair, Element, first, second, pair} from "./chapter3_pair.ts";
 
-type Table = Pair;
+export type Table = Pair;
 
 const _head = first;
 const _tail = second;

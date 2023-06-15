@@ -1,13 +1,9 @@
 import {describe} from "https://deno.land/std@0.191.0/testing/bdd.ts";
 import {each} from "./test_utility.ts";
-import {Pair} from "../src/chapter3_pair.ts";
 import {call, func, variable} from "../src/chapter7_constructor.ts";
-import {listToString} from "../src/chapter3_list.ts";
-import {expToString} from "../src/chapter7_interpreter.ts";
+import {Exp, Env, expToString, interp, extEnv, emptyEnv} from "../src/chapter7_interpreter.ts";
 import {assertEquals} from "https://deno.land/std@0.191.0/testing/asserts.ts";
 import {binop} from "../src/chapter5_caculator.ts";
-
-type Exp = Pair;
 
 describe('test expression to string', () => {
     const data: Array<[string, Exp]> = [
@@ -22,10 +18,32 @@ describe('test expression to string', () => {
     ];
 
     each<[string, Exp]>(
-        data.reduce((accu, [expected, exp]) => ({...accu, [`"${listToString(exp)}"`]: [expected, exp]}), {}),
+        data.reduce((accu, [expected, exp]) => ({...accu, [expected]: [expected, exp]}), {}),
         ([expected, exp]: [string, Exp]) => {
             const actual = expToString(exp);
             assertEquals(actual, expected);
         }
     )
+});
+
+describe('test expression to evaluate', () => {
+    const data: Array<[number | string, Exp | number | string, Env]> = [
+        [2, 2, emptyEnv],
+        ['literal string', 'literal string', emptyEnv],
+        [2, binop('+', 1, 1), emptyEnv],
+        [-1, binop('-', 2, '3'), emptyEnv],
+        [11, binop('+', 1, binop('*', 1, '10')), emptyEnv],
+        [2, variable('x'), extEnv('x', 2, emptyEnv)],
+        ['literal string', variable('x'), extEnv('x', 'literal string', emptyEnv)],
+        [2, binop('+', 1, variable('x')), extEnv('x', 1, emptyEnv)],
+        [7, binop('+', 1, binop('*', variable('x'), variable('y'))), extEnv('y', 3, extEnv('x', 2, emptyEnv))],
+    ];
+
+    each<[number | string, Exp | number | string, Env]>(
+        data.reduce((accu, [expected, exp, env]) => ({...accu, [`${expToString(exp)} => ${expected}`]: [expected, exp, env]}), {}),
+        ([expected, exp, env]: [number | string, Exp | number | string, Env]) => {
+            const actual = interp(exp, env);
+            assertEquals(actual, expected);
+        }
+    );
 });

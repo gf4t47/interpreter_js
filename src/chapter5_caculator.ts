@@ -3,7 +3,7 @@ import {emptyNode, first, Pair, pair, second, Element, isPair} from "./chapter3_
 type BinOp = Pair;
 const typeTag = `binOp#${Math.random().toString()}`;
 
-const calcOp: Record<string, (a: number, b: number) => number> = {
+export const calcOp: Record<string, (a: number, b: number) => number> = {
     '+': (x: number, y: number) => x + y,
     '-': (x: number, y: number) => x - y,
     '*': (x: number, y: number) => x * y,

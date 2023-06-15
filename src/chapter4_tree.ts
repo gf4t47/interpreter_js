@@ -1,11 +1,11 @@
-import {emptyNode, first, isPair, Pair, second} from "./chapter3_pair.ts";
+import {Element, emptyNode, first, isPair, Pair, second} from "./chapter3_pair.ts";
 
 const _left = first;
 const _right = second;
 
 type Tree = Pair;
 
-export function treeEqual(t1: Tree, t2: Tree): boolean {
+export function treeEqual(t1: Element, t2: Element): boolean {
     if (!isPair(t1) && !isPair(t2)) {
         return t1 == t2;
     }
